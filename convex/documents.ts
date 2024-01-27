@@ -11,7 +11,7 @@ export const create = mutation({
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
-      throw new Error("Not authenticated!");
+      throw new Error("Not authenticated");
     }
 
     const userId = identity.subject;
@@ -33,7 +33,7 @@ export const get = query({
     const identity = await ctx.auth.getUserIdentity();
 
     if (!identity) {
-      throw new Error("Not authenticated!");
+      throw new Error("Not authenticated");
     }
 
     const documents = await ctx.db.query("documents").collect();
