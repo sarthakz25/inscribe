@@ -17,8 +17,8 @@ const DocumentsPage = () => {
 
         toast.promise(promise, {
             loading: "Creating a new note...",
-            success: "New note created!",
-            error: "Failed to create a new note.",
+            success: "Note successfully created.",
+            error: "Unable to create note. Please try again."
         });
     }
 
