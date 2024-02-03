@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings, Trash2 } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings2, Trash2 } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
@@ -11,7 +11,7 @@ import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
 import { DocumentList } from "./document-list";
-import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { TrashBox } from "./trash-box";
 
 export const Navigation = () => {
@@ -139,12 +139,12 @@ export const Navigation = () => {
                     />
                     <Item
                         label="Settings"
-                        icon={Settings}
+                        icon={Settings2}
                         onClick={() => { }}
                     />
                     <Item
                         onClick={handleCreate}
-                        label="Add Page"
+                        label="New Page"
                         icon={PlusCircle}
                     />
                 </div>
@@ -153,7 +153,7 @@ export const Navigation = () => {
                     <Item
                         onClick={handleCreate}
                         icon={Plus}
-                        label="Create a Page"
+                        label="Add a Page"
                     />
                     <Popover>
                         <PopoverTrigger className="w-full mt-4">
@@ -163,7 +163,7 @@ export const Navigation = () => {
                             />
                         </PopoverTrigger>
                         <PopoverContent
-                            className="p-0 w-72"
+                            className="p-0 w-64 sm:w-72"
                             side={isMobile ? "bottom" : "right"}
                         >
                             <TrashBox />
