@@ -12,6 +12,7 @@ import { Item } from "./item";
 import { toast } from "sonner";
 import { DocumentList } from "./document-list";
 import { Popover, PopoverTrigger, PopoverContent } from "@radix-ui/react-popover";
+import { TrashBox } from "./trash-box";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -25,7 +26,7 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
     useEffect(() => {
-        if(isMobile) {
+        if (isMobile) {
             collapse();
         } else {
             resetWidth();
@@ -33,7 +34,7 @@ export const Navigation = () => {
     }, [isMobile]);
 
     useEffect(() => {
-        if(isMobile) {
+        if (isMobile) {
             collapse();
         }
     }, [pathname, isMobile]);
@@ -52,14 +53,14 @@ export const Navigation = () => {
     const handleMouseMove = (
         event: MouseEvent
     ) => {
-        if(!isResizingRef.current) return;
+        if (!isResizingRef.current) return;
 
         let newWidth = event.clientX;
 
-        if(newWidth < 240) newWidth = 240;
-        if(newWidth > 480) newWidth = 480;
+        if (newWidth < 240) newWidth = 240;
+        if (newWidth > 480) newWidth = 480;
 
-        if(sidebarRef.current && navbarRef.current) {
+        if (sidebarRef.current && navbarRef.current) {
             sidebarRef.current.style.width = `${newWidth}px`;
             navbarRef.current.style.setProperty("left", `${newWidth}px`);
             navbarRef.current.style.setProperty("width", `cal(100% - ${newWidth}px)`);
@@ -73,7 +74,7 @@ export const Navigation = () => {
     }
 
     const resetWidth = () => {
-        if(sidebarRef.current && navbarRef.current) {
+        if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(false);
             setIsRessetting(true);
 
@@ -86,7 +87,7 @@ export const Navigation = () => {
     }
 
     const collapse = () => {
-        if(sidebarRef.current && navbarRef.current) {
+        if (sidebarRef.current && navbarRef.current) {
             setIsCollapsed(true);
             setIsRessetting(true);
 
@@ -120,7 +121,7 @@ export const Navigation = () => {
             >
                 <div
                     onClick={collapse}
-                    role="button" 
+                    role="button"
                     className={cn(
                         "h-6 w-6 text-muted-foreground rounded-sm hover:bg-zinc-200 dark:hover:bg-zinc-700 absolute top-3 right-2 opacity-0 group-hover/sidebar:opacity-100 transition",
                         isMobile && "opacity-100"
@@ -134,12 +135,12 @@ export const Navigation = () => {
                         label="Search"
                         icon={Search}
                         isSearch
-                        onClick={() => {}}
+                        onClick={() => { }}
                     />
                     <Item
                         label="Settings"
                         icon={Settings}
-                        onClick={() => {}}
+                        onClick={() => { }}
                     />
                     <Item
                         onClick={handleCreate}
@@ -165,7 +166,7 @@ export const Navigation = () => {
                             className="p-0 w-72"
                             side={isMobile ? "bottom" : "right"}
                         >
-                            <p>trash box here</p>
+                            <TrashBox />
                         </PopoverContent>
                     </Popover>
                 </div>
@@ -175,8 +176,8 @@ export const Navigation = () => {
                     className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
                 />
             </aside>
-            <div 
-                ref={navbarRef} 
+            <div
+                ref={navbarRef}
                 className={cn(
                     "absolute top-0 z-[99999] left-60 w-[calc(100% - 240px)]",
                     isResetting && "transition-all ease-in-out duration-300",
