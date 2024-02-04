@@ -73,7 +73,7 @@ export const SearchCommand = () => {
                                     {document.icon}
                                 </p>
                             ) : (
-                                <File mr-2 h-4 w-4 />
+                                <File className="mr-2 h-4 w-4" />
                             )}
                             <span>
                                 {document.title}
