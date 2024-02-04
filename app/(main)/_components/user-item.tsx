@@ -23,14 +23,14 @@ export const UserItem = () => {
                     role="button"
                     className="flex items-center text-sm p-3 w-full hover:bg-primary/5"
                 >
-                    <div className="gap-x-2 flex items-center max-w-[150px]">
+                    <div className="gap-x-2 flex items-center max-w-[165px]">
                         <Avatar className="h-5 w-5">
                             <AvatarImage src={user?.imageUrl} />
                         </Avatar>
                         <span className="text-start font-medium line-clamp-1">
                             {user?.fullName}&apos;s Inscribe
                         </span>
-                        <ChevronsUpDown className="h-6 w-6 ml-2 text-muted-foreground" />
+                        <ChevronsUpDown className="h-3 w-3 ml-2 text-muted-foreground flex-shrink-0" />
                     </div>
                 </div>
             </DropdownMenuTrigger>
