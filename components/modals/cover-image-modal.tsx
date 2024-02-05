@@ -1,10 +1,6 @@
 "use client";
 
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useCoverImage } from "@/hooks/use-cover-image";
 import { SingleImageDropzone } from "@/components/single-image-dropzone";
 import { useState } from "react";
@@ -37,11 +33,28 @@ export const CoverImageModal = () => {
             setIsUploading(true);
             setFile(file);
 
-            const res = await edgestore.publicFiles.upload({ file });
+            // let res;
+            // if (coverImage.url) {
+            //     res = await edgestore.publicFiles.upload({
+            //         file,
+            //         options: {
+            //             replaceTargetUrl: coverImage.url,
+            //         },
+            //     });
+            // } else {
+            //     res = await edgestore.publicFiles.upload({ file });
+            // }
+
+            const res = await edgestore.publicFiles.upload({
+                file,
+                options: {
+                    replaceTargetUrl: coverImage.url
+                },
+            });
 
             await update({
                 id: params.documentId as Id<"documents">,
-                coverImage: res.url
+                coverImage: res.url,
             });
 
             onClose();
@@ -52,9 +65,7 @@ export const CoverImageModal = () => {
         <Dialog open={coverImage.isOpen} onOpenChange={coverImage.onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <h2 className="text-center text-lg font-semibold">
-                        Cover Image
-                    </h2>
+                    <h2 className="text-center text-lg font-semibold">Cover Image</h2>
                 </DialogHeader>
                 <SingleImageDropzone
                     className="w-full outline-none"
@@ -65,4 +76,4 @@ export const CoverImageModal = () => {
             </DialogContent>
         </Dialog>
     );
-}
+};

@@ -11,7 +11,7 @@ const MainLayout = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const {isAuthenticated, isLoading} = useConvexAuth();
+    const { isAuthenticated, isLoading } = useConvexAuth();
 
     if (isLoading) {
         return (
@@ -21,21 +21,21 @@ const MainLayout = ({
         );
     }
 
-    if(!isAuthenticated) {
+    if (!isAuthenticated) {
         return redirect("/");
     }
 
-    return ( 
+    return (
         <div className="h-full flex">
             <Navigation />
 
-            <main className="h-full flex-1 overflow-y-auto">
+            <main className="flex-1 h-full overflow-y-auto">
                 <SearchCommand />
 
                 {children}
             </main>
         </div>
-     );
+    );
 }
- 
+
 export default MainLayout;
