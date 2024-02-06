@@ -80,3 +80,7 @@ body,
     @apply bg-background text-foreground;
   }
 }
+
+.bn-container[data-color-scheme="dark"] .bn-editor {
+  background-color: hsl(240 10% 8%);
+}
