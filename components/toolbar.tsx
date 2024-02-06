@@ -9,6 +9,8 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import TextareaAutosize from "react-textarea-autosize";
 import { useCoverImage } from "@/hooks/use-cover-image";
+import { useMediaQuery } from "usehooks-ts";
+import { cn } from "@/lib/utils";
 
 interface ToolbarProps {
     initialData: Doc<"documents">;
@@ -25,6 +27,8 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     const removeIcon = useMutation(api.documents.removeIcon);
 
     const coverImage = useCoverImage();
+
+    const isMobile = useMediaQuery("(max-width: 768px)");
 
     const enableInput = () => {
         if (preview) return;
@@ -67,7 +71,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
     };
 
     return (
-        <div className="pl-[50px] group relative">
+        <div className="px-[3.125rem] group relative">
             {!!initialData.icon && !preview && (
                 <div className="flex items-center gap-x-2 group/icon pt-3">
                     <IconPicker onChange={onIconSelect}>
@@ -79,7 +83,10 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
                         size="icon"
                         variant="outline"
                         onClick={onRemoveIcon}
-                        className="rounded-full opacity-0 group-hover/icon:opacity-100 transition text-muted-foreground text-xs"
+                        className={cn(
+                            "rounded-full opacity-0 group-hover/icon:opacity-100 transition text-muted-foreground text-xs",
+                            isMobile && "opacity-100"
+                        )}
                     >
                         <X className="h-4 w-4" />
                     </Button>
@@ -88,7 +95,10 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             {!!initialData.icon && preview && (
                 <p className="text-6xl pt-6">{initialData.icon}</p>
             )}
-            <div className="opacity-0 group-hover:opacity-100 flex items-center gap-x-2 py-7">
+            <div className={cn(
+                "opacity-0 group-hover:opacity-100 flex items-center gap-2 py-7 flex-wrap",
+                isMobile && "opacity-100"
+            )}>
                 {!initialData.icon && !preview && (
                     <IconPicker asChild onChange={onIconSelect}>
                         <Button
@@ -125,7 +135,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
             ) : (
                 <div
                     onClick={enableInput}
-                    className="pb-[11.5px] text-5xl font-bold break-words outline-none"
+                    className="pb-[11.5px] text-3xl sm:text-4xl lg:text-5xl font-bold break-words outline-none"
                 >
                     {initialData.title}
                 </div>

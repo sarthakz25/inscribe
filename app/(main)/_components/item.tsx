@@ -23,6 +23,7 @@ interface ItemProps {
     active?: boolean;
     expanded?: boolean;
     isSearch?: boolean;
+    isSettings?: boolean;
     level?: number;
     onExpand?: () => void;
     label: string;
@@ -38,6 +39,7 @@ export const Item = ({
     active,
     documentIcon,
     isSearch,
+    isSettings,
     level = 0,
     onExpand,
     expanded
@@ -124,6 +126,7 @@ export const Item = ({
                     />
                 </div>
             )}
+
             {documentIcon ? (
                 <div className="shrink-0 mr-2 text-[18px]">
                     {documentIcon}
@@ -131,14 +134,23 @@ export const Item = ({
             ) : (
                 <Icon className="shrink-0 h-[18px] mr-2 text-muted-foreground" />
             )}
+
             <span className="truncate">
                 {label}
             </span>
+
             {isSearch && (
                 <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border dark:border-zinc-700 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
                     CTRL K
                 </kbd>
             )}
+
+            {isSettings && (
+                <kbd className="ml-auto pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border dark:border-zinc-700 bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">
+                    CTRL J
+                </kbd>
+            )}
+
             {!!id && (
                 <div className="ml-auto flex items-center gap-x-1">
                     <DropdownMenu>

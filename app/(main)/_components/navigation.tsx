@@ -146,6 +146,7 @@ export const Navigation = () => {
                     <Item
                         label="Settings"
                         icon={Settings2}
+                        isSettings
                         onClick={settings.onOpen}
                     />
                     <Item
