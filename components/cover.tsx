@@ -41,8 +41,8 @@ export const Cover = ({
     return (
         <div
             className={cn(
-                "relative w-full h-[35vh] group",
-                !url && "h-[12vh]",
+                "relative w-full h-[30vh] group top-[2.875rem]",
+                !url && "h-[15vh]",
                 url && "bg-muted-foreground/5"
             )}
         >
@@ -55,7 +55,7 @@ export const Cover = ({
                 />
             )}
             {url && !preview && (
-                <div className="opacity-0 group-hover:opacity-100 absolute bottom-5 right-5 flex items-center gap-x-2">
+                <div className="opacity-0 group-hover:opacity-100 absolute top-3 right-3 flex items-center gap-x-2">
                     <Button
                         variant="outline"
                         size="sm"
@@ -82,6 +82,6 @@ export const Cover = ({
 
 Cover.Skeleton = function CoverSkeleton() {
     return (
-        <Skeleton className="w-full h-[12vh]" />
+        <Skeleton className="w-full h-[15vh]" />
     );
 }

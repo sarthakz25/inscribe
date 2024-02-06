@@ -34,7 +34,7 @@ export const Editor = ({ onChange, initialContent, editable }: EditorProps) => {
     });
 
     return (
-        <div className="p-4">
+        <div className="py-6 px-4">
             <BlockNoteView
                 editor={editor}
                 theme={resolvedTheme === "dark" ? "dark" : "light"}

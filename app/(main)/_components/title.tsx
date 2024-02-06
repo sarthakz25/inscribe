@@ -54,8 +54,8 @@ export const Title = ({
     };
 
     return (
-        <div className="flex items-center gap-x-2">
-            {!!initialData.icon && <p>{initialData.icon}</p>}
+        <div className="flex items-center gap-x-1">
+            {!!initialData.icon && <p className="text-lg">{initialData.icon}</p>}
             {isEditing ? (
                 <Input
                     ref={inputRef}
@@ -69,7 +69,7 @@ export const Title = ({
             ) : (
                 <Button
                     onClick={enableInput}
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
                     className="font-normal h-auto py-1 px-2"
                 >
