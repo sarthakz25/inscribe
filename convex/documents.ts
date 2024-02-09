@@ -261,8 +261,8 @@ export const getById = query({
     }
 
     return document;
-  }
-})
+  },
+});
 
 export const update = mutation({
   args: {
@@ -271,7 +271,7 @@ export const update = mutation({
     content: v.optional(v.string()),
     coverImage: v.optional(v.string()),
     icon: v.optional(v.string()),
-    isPublished: v.optional(v.boolean())
+    isPublished: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -299,12 +299,12 @@ export const update = mutation({
     });
 
     return document;
-  }
+  },
 });
 
 export const removeIcon = mutation({
   args: {
-    id: v.id("documents")
+    id: v.id("documents"),
   },
   handler: async (ctx, args) => {
     const identity = await ctx.auth.getUserIdentity();
@@ -326,11 +326,11 @@ export const removeIcon = mutation({
     }
 
     const document = await ctx.db.patch(args.id, {
-      icon: undefined
+      icon: undefined,
     });
 
     return document;
-  }
+  },
 });
 
 export const removeCover = mutation({
@@ -355,9 +355,35 @@ export const removeCover = mutation({
     }
 
     const document = await ctx.db.patch(args.id, {
-      coverImage: undefined
+      coverImage: undefined,
     });
 
     return document;
-  }
+  },
+});
+
+export const removeAll = mutation({
+  handler: async (ctx) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (!identity) {
+      throw new Error("Not authenticated");
+    }
+
+    const userId = identity.subject;
+
+    const archivedDocuments = await ctx.db
+      .query("documents")
+      .withIndex("by_user", (q) => q.eq("userId", userId))
+      .filter((q) => q.eq(q.field("isArchived"), true))
+      .collect();
+
+    for (const doc of archivedDocuments) {
+      await ctx.db.delete(doc._id);
+    }
+
+    return {
+      message: "All archived documents have been successfully deleted.",
+    };
+  },
 });

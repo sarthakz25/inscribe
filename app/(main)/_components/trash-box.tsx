@@ -2,11 +2,12 @@
 
 import { ConfirmModal } from "@/components/modals/confirm-modal";
 import { Spinner } from "@/components/spinner";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
-import { ArchiveRestore, ArchiveX, Search } from "lucide-react";
+import { ArchiveRestore, ArchiveX, Flame } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -17,6 +18,9 @@ export const TrashBox = () => {
     const documents = useQuery(api.documents.getTrash);
     const restore = useMutation(api.documents.restore);
     const remove = useMutation(api.documents.remove);
+    const removeAll = useMutation(api.documents.removeAll);
+
+    const hasArchivedDocuments = documents && documents.length > 0;
 
     const [search, setSearch] = useState("");
 
@@ -58,6 +62,16 @@ export const TrashBox = () => {
         }
     };
 
+    const onRemoveAll = () => {
+        const promise = removeAll();
+
+        toast.promise(promise, {
+            loading: "Deleting archived notes...",
+            success: "Archived notes deleted successfully.",
+            error: "Failed to delete archived notes. Please try again."
+        });
+    };
+
     if (documents === undefined) {
         return (
             <div className="flex h-full items-center justify-center p-4">
@@ -69,15 +83,24 @@ export const TrashBox = () => {
     return (
         <div className="text-sm">
             <div className="flex items-center gap-x-1 p-2">
-                <Search className="h-4 w-4" />
                 <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="h-7 px-2 focus-visible:ring-transparent bg-secondary"
+                    className="h-7 px-2 focus-visible:ring-transparent bg-primary-foreground"
                     placeholder="Filter by page title..."
                 />
+                <ConfirmModal onConfirm={onRemoveAll}>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        disabled={!hasArchivedDocuments}
+                        className="h-[1.75rem]"
+                    >
+                        <Flame className="h-4 w-4 text-red-400" />
+                    </Button>
+                </ConfirmModal>
             </div>
-            <div className="mt-2 px-1 pb-1">
+            <div className="p-2">
                 <p className="hidden last:block text-xs text-center text-muted-foreground pb-2">
                     Your trash is empty.
                 </p>
