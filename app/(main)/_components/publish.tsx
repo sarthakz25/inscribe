@@ -35,13 +35,13 @@ export const Publish = ({
             .finally(() => setIsPublishing(false));
 
         toast.promise(promise, {
-            loading: "Publishing...",
-            success: "Note published!",
-            error: "Failed to publish note."
+            loading: "Publishing note...",
+            success: "Note is now live.",
+            error: "Publish failed. Please retry."
         });
     };
 
-    const onUnPublish = () => {
+    const onUnpublish = () => {
         setIsPublishing(true);
 
         const promise = update({
@@ -51,9 +51,9 @@ export const Publish = ({
             .finally(() => setIsPublishing(false));
 
         toast.promise(promise, {
-            loading: "Unpublishing...",
-            success: "Note Unpublished!",
-            error: "Failed to Unpublish note."
+            loading: "Reverting note to private...",
+            success: "Note is private again.",
+            error: "Privacy switch failed. Try again."
         });
     };
 
@@ -79,17 +79,11 @@ export const Publish = ({
                     ) : (
                         <Link2Off className="h-4 w-4" />
                     )}
-                    {initialData.isPublished && (
-                        <Globe
-                            className="h-4 w-4 ml-2 text-sky-500"
-                        />
-                    )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent
-                className="w-64 sm:w-72"
+                className="max-w-md"
                 align="end"
-                alignOffset={1}
                 forceMount
             >
                 {initialData.isPublished ? (
@@ -97,7 +91,7 @@ export const Publish = ({
                         <div className="gap-x-2 flex items-center">
                             <Globe className="text-sky-500 animate-pulse h-4 w-4" />
                             <p className="text-xs font-medium text-muted-foreground">
-                                This note is live on web.
+                                Note is currently visible on the web.
                             </p>
                         </div>
                         <div className="flex items-center">
@@ -120,11 +114,11 @@ export const Publish = ({
                         </div>
                         <Button
                             size="sm"
-                            onClick={onUnPublish}
+                            onClick={onUnpublish}
                             disabled={isPublishing}
                             className="h-[1.875rem] w-full text-xs"
                         >
-                            Unpublish
+                            Make Private
                         </Button>
                     </div>
                 ) : (
@@ -133,10 +127,10 @@ export const Publish = ({
                             className="h-8 w-8 text-muted-foreground mb-2"
                         />
                         <p className="text-sm font-medium mb-2">
-                            Publish this note
+                            Ready to share?
                         </p>
                         <span className="text-xs text-muted-foreground mb-4">
-                            Share your work with others
+                            Make your note accessible to others.
                         </span>
                         <Button
                             size="sm"
@@ -144,7 +138,7 @@ export const Publish = ({
                             onClick={onPublish}
                             className="h-[1.875rem] w-full text-xs"
                         >
-                            Publish
+                            Go Live
                         </Button>
                     </div>
                 )}

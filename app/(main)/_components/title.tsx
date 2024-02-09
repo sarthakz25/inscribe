@@ -71,7 +71,7 @@ export const Title = ({
                     onClick={enableInput}
                     variant="ghost"
                     size="sm"
-                    className="font-normal h-auto py-1 px-2 max-w-36 sm:max-w-xs lg:max-w-md"
+                    className="font-normal h-auto py-1 px-2 max-w-28 sm:max-w-xs lg:max-w-md"
                 >
                     <span
                         className="truncate"
