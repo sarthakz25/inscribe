@@ -1,18 +1,18 @@
 import { Navbar } from "./_components/navbar";
 
-const MarketingLayout = ({
+const HomeLayout = ({
     children
 }: {
     children: React.ReactNode;
 }) => {
-    return ( 
+    return (
         <div className="h-full">
             <Navbar />
             <main className="h-full pt-36">
                 {children}
             </main>
         </div>
-     );
+    );
 }
- 
-export default MarketingLayout;
+
+export default HomeLayout;
