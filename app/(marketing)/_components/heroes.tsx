@@ -3,32 +3,32 @@ import Image from "next/image";
 export const Heroes = () => {
     return (
         <div className="flex flex-col items-center justify-center max-w-5xl">
-            <div className="flex items-center gap-x-10">
-                <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px] md:w-[350px] md:h-[350px]">
-                    <Image 
-                        src="/documents.png"
+            <div className="flex items-center gap-x-10 pb-8">
+                <div className="relative w-[250px] h-[250px] sm:w-[300px] sm:h-[300px]">
+                    <Image
+                        src="/hero.svg"
                         fill
                         alt="Documents"
                         className="object-contain dark:hidden"
                     />
                     <Image
-                        src="/documents-dark.png"
+                        src="/hero-dark.svg"
                         fill
                         alt="Documents"
                         className="object-contain hidden dark:block"
                     />
                 </div>
-                <div className="relative w-[325px] h-[325px] hidden md:block">
+                <div className="relative w-[350px] h-[350px] hidden md:block">
                     <Image
-                        src="/reading.png"
+                        src="/productive.svg"
                         fill
-                        alt="Reading"
+                        alt="Documents"
                         className="object-contain dark:hidden"
                     />
                     <Image
-                        src="/reading-dark.png"
+                        src="/productive-dark.svg"
                         fill
-                        alt="Reading"
+                        alt="Documents"
                         className="object-contain hidden dark:block"
                     />
                 </div>

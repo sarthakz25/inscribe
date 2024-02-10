@@ -29,14 +29,14 @@ const DocumentsPage = () => {
     return (
         <div className="h-full flex flex-col items-center justify-center space-y-4">
             <Image
-                src="/empty.png"
+                src="/workspace.svg"
                 height="300"
                 width="300"
                 alt="Empty"
                 className="dark:hidden"
             />
             <Image
-                src="/empty-dark.png"
+                src="/workspace-dark.svg"
                 height="300"
                 width="300"
                 alt="Empty"
