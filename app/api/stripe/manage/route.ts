@@ -1,4 +1,4 @@
-import { stripe } from "@/lib/stripe";
+import stripe from "@/lib/stripe";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -21,10 +21,7 @@ export async function POST(req: Request) {
 
             return NextResponse.json({ status: true, url: portal.url });
         } else {
-            return NextResponse.json({
-                status: false,
-                message: "No customer found",
-            });
+            return NextResponse.json({ status: false, message: "No customer found" });
         }
     } catch (error) {
         return NextResponse.json(

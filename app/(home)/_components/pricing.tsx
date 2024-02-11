@@ -1,11 +1,10 @@
-import React from "react";
 import { PricingCard } from "./pricing-card";
 
 const cards = [
     {
         title: "Basic",
         subtitle: "For organizing every corner of your work & life.",
-        options: "10 page limit, File upload limited",
+        options: "5 page limit, File upload limited",
         price: "Free",
     },
     {

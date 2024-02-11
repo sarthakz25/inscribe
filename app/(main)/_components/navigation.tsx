@@ -1,12 +1,12 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Search, Settings2, Trash2 } from "lucide-react";
+import { ChevronsLeft, MenuIcon, Plus, PlusCircle, Rocket, Search, Settings2, Trash2 } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "usehooks-ts";
 import { UserItem } from "./user-item";
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { Item } from "./item";
 import { toast } from "sonner";
@@ -16,6 +16,10 @@ import { TrashBox } from "./trash-box";
 import { useSearch } from "@/hooks/use-search";
 import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
+import useSubscription from "@/hooks/use-subscription";
+import { useUser } from "@clerk/clerk-react";
+import { Spinner } from "@/components/spinner";
+import { Progress } from "@/components/ui/progress";
 
 export const Navigation = () => {
     const pathname = usePathname();
@@ -25,12 +29,20 @@ export const Navigation = () => {
     const settings = useSettings();
     const params = useParams();
     const router = useRouter();
+    const { user } = useUser();
 
     const isResizingRef = useRef(false);
     const sidebarRef = useRef<ElementRef<"aside">>(null);
     const navbarRef = useRef<ElementRef<"div">>(null);
+
     const [isResetting, setIsRessetting] = useState(false);
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
+
+    const { isLoading, plan } = useSubscription(
+        user?.emailAddresses[0].emailAddress!
+    );
+
+    const documents = useQuery(api.documents.getAllDocuments);
 
     useEffect(() => {
         if (isMobile) {
@@ -107,6 +119,11 @@ export const Navigation = () => {
     }
 
     const handleCreate = () => {
+        if (documents?.length && documents.length >= 5 && plan === "Free") {
+            toast.error("You can only create 5 documents in the free plan");
+            return;
+        }
+
         const promise = create({ title: "Untitled" })
             .then((documentId) => router.push(`/documents/${documentId}`));
 
@@ -137,6 +154,7 @@ export const Navigation = () => {
                 >
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
+
                 <div>
                     <UserItem />
                     <Item
@@ -157,6 +175,7 @@ export const Navigation = () => {
                         icon={PlusCircle}
                     />
                 </div>
+
                 <div className="mt-4">
                     <DocumentList />
                     <Item
@@ -179,11 +198,58 @@ export const Navigation = () => {
                         </PopoverContent>
                     </Popover>
                 </div>
+
                 <div
                     onMouseDown={handleMouseDown}
                     onClick={resetWidth}
                     className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
                 />
+
+                <div className="absolute bottom-0 p-4 bg-background/50 w-full">
+                    {isLoading ? (
+                        <div className="w-full flex items-center justify-center">
+                            <Spinner />
+                        </div>
+                    ) : (
+                        <>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-2 text-sm">
+                                    <Rocket className="h-4 w-4" />
+                                    <p className="font-medium text-muted-foreground">{plan} plan</p>
+                                </div>
+                                {plan === "Free" ? (
+                                    <p className="text-sm text-muted-foreground">
+                                        {documents?.length}/5
+                                    </p>
+                                ) : (
+                                    <p className="text-sm text-muted-foreground">
+                                        {documents?.length} notes
+                                    </p>
+                                )}
+                            </div>
+                            {plan === "Free" && (
+                                <Progress
+                                    value={
+                                        documents?.length && documents.length >= 5
+                                            ? 100
+                                            : (documents?.length || 0) * 20
+                                    }
+                                    className="mt-2 h-2"
+                                />
+                            )}
+                            {plan === "Plus" && (
+                                <Progress
+                                    value={
+                                        documents?.length && documents.length >= 100
+                                            ? 100
+                                            : (documents?.length || 0) * 1
+                                    }
+                                    className="mt-2 h-2"
+                                />
+                            )}
+                        </>
+                    )}
+                </div>
             </aside>
             <div
                 ref={navbarRef}

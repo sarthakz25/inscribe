@@ -5,7 +5,7 @@ import { Spinner } from "@/components/spinner";
 import { SignInButton } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
 import { Check } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useUser } from "@clerk/clerk-react";
@@ -61,7 +61,7 @@ export const PricingCard = ({
 
             <div className="flex justify-center items-baseline my-8">
                 <span className="mr-2 text-5xl font-bold">
-                    {price !== "Free" && "₹"}
+                    {price !== "Free" && "$"}
                     {price}
                 </span>
                 <span className="text-muted-foreground">/ month</span>
