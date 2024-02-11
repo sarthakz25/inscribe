@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Loader } from "lucide-react";
+import { Spinner } from "@/components/spinner";
 import { SignInButton } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
 import { Check } from "lucide-react";
@@ -45,6 +45,7 @@ export const PricingCard = ({
                 email: user?.emailAddresses[0].emailAddress,
                 userId: user?.id,
             });
+
             window.open(data, "_self");
             setIsSubmitting(false);
         } catch (error) {
@@ -54,21 +55,21 @@ export const PricingCard = ({
     };
 
     return (
-        <div className="flex flex-col p-6 mx-auto max-w-lg text-center bg-white dark:bg-black rounded-lg border border-zinc-200 shadow dark:border-x-zinc-700 lg:p-8">
+        <div className="flex flex-col p-6 mx-auto max-w-lg text-center bg-secondary/20 rounded-lg border shadow-sm xl:p-8">
             <h3 className="mb-4 text-2xl font-semibold">{title}</h3>
-            <p className="font-light text-muted-foreground sm:text-lg">{subtitle}</p>
+            <p className="sm:text-lg text-muted-foreground">{subtitle}</p>
 
             <div className="flex justify-center items-baseline my-8">
-                <span className="mr-2 text-5xl font-extrabold">
+                <span className="mr-2 text-5xl font-bold">
                     {price !== "Free" && "₹"}
                     {price}
                 </span>
-                <span className="text-muted-foreground">/month</span>
+                <span className="text-muted-foreground">/ month</span>
             </div>
 
             {isLoading && (
                 <div className="w-full flex items-center justify-center">
-                    <Loader />
+                    <Spinner size="lg" />
                 </div>
             )}
 
@@ -76,7 +77,7 @@ export const PricingCard = ({
                 <Button onClick={onSubmit} disabled={isSubmitting}>
                     {isSubmitting ? (
                         <>
-                            <Loader />
+                            <Spinner />
                             <span className="ml-2">Submitting</span>
                         </>
                     ) : (
@@ -94,7 +95,7 @@ export const PricingCard = ({
             <ul role="list" className="space-y-4 text-left mt-8">
                 {options.split(", ").map((option) => (
                     <li key={option} className="flex items-center space-x-3">
-                        <Check className="flex-shrink-0 w-5 h-5 text-green-400" />
+                        <Check className="flex-shrink-0 w-5 h-5 text-green-500 dark:text-green-400" />
                         <span>{option}</span>
                     </li>
                 ))}
