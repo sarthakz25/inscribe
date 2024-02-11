@@ -18,7 +18,7 @@ import { useSettings } from "@/hooks/use-settings";
 import { Navbar } from "./navbar";
 import useSubscription from "@/hooks/use-subscription";
 import { useUser } from "@clerk/clerk-react";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 import { Progress } from "@/components/ui/progress";
 
 export const Navigation = () => {
@@ -39,7 +39,7 @@ export const Navigation = () => {
     const [isCollapsed, setIsCollapsed] = useState(isMobile);
 
     const { isLoading, plan } = useSubscription(
-        user?.emailAddresses[0].emailAddress!
+        user?.emailAddresses[0]?.emailAddress!
     );
 
     const documents = useQuery(api.documents.getAllDocuments);
@@ -120,7 +120,12 @@ export const Navigation = () => {
 
     const handleCreate = () => {
         if (documents?.length && documents.length >= 5 && plan === "Free") {
-            toast.error("You can only create 5 documents in the free plan");
+            toast.error("You can only create 5 pages in the free plan");
+            return;
+        }
+
+        if (documents?.length && documents.length >= 100 && plan === "Plus") {
+            toast.error("You can only create 100 pages in the plus plan");
             return;
         }
 
@@ -221,9 +226,13 @@ export const Navigation = () => {
                                     <p className="text-sm text-muted-foreground">
                                         {documents?.length}/5
                                     </p>
+                                ) : plan === "Plus" ? (
+                                    <p className="text-sm text-muted-foreground">
+                                        {documents?.length}/100
+                                    </p>
                                 ) : (
                                     <p className="text-sm text-muted-foreground">
-                                        {documents?.length} notes
+                                        {documents?.length} pages
                                     </p>
                                 )}
                             </div>

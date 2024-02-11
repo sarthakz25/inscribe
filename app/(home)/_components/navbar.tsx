@@ -3,11 +3,11 @@
 import { UseScrollTop } from "@/hooks/use-scroll-top";
 import { cn } from "@/lib/utils";
 import { Logo } from "./logo";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/shared/mode-toggle";
 import { useConvexAuth } from "convex/react";
 import { SignInButton, UserButton } from "@clerk/clerk-react";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 
 export const Navbar = () => {
     const scrolled = UseScrollTop();

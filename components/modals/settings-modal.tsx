@@ -3,11 +3,11 @@
 import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { useSettings } from "@/hooks/use-settings";
 import { Label } from "@/components/ui/label";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle } from "@/components/shared/mode-toggle";
 import { useEffect, useState } from "react";
 import { Settings2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 import axios from "axios";
 import { toast } from "sonner";
 import { useUser } from "@clerk/clerk-react";

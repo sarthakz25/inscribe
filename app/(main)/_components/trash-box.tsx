@@ -1,7 +1,7 @@
 "use client";
 
 import { ConfirmModal } from "@/components/modals/confirm-modal";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { api } from "@/convex/_generated/api";
@@ -11,14 +11,24 @@ import { ArchiveRestore, ArchiveX, Flame } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import useSubscription from "@/hooks/use-subscription";
+import { useUser } from "@clerk/clerk-react";
 
 export const TrashBox = () => {
     const router = useRouter();
     const params = useParams();
+    const { user } = useUser();
+
     const documents = useQuery(api.documents.getTrash);
     const restore = useMutation(api.documents.restore);
     const remove = useMutation(api.documents.remove);
     const removeAll = useMutation(api.documents.removeAll);
+
+    const allDocuments = useQuery(api.documents.getAllDocuments);
+
+    const { plan } = useSubscription(
+        user?.emailAddresses[0]?.emailAddress!
+    );
 
     const hasArchivedDocuments = documents && documents.length > 0;
 
@@ -37,6 +47,17 @@ export const TrashBox = () => {
         documentId: Id<"documents">,
     ) => {
         event.stopPropagation();
+
+        if (allDocuments?.length && allDocuments.length >= 5 && plan === "Free") {
+            toast.error("You already have 5 pages. Please delete one to restore this page.");
+            return;
+        }
+
+        if (allDocuments?.length && allDocuments.length >= 100 && plan === "Plus") {
+            toast.error("You already have 100 pages. Please delete one to restore this page.");
+            return;
+        }
+
         const promise = restore({ id: documentId });
 
         toast.promise(promise, {
@@ -111,9 +132,8 @@ export const TrashBox = () => {
                         onClick={() => onClick(document._id)}
                         className="text-sm rounded-sm w-full hover:bg-primary/5 flex items-center text-primary justify-between"
                     >
-                        <span className="truncate pl-2">
-                            {document.title}
-                        </span>
+                        <span className="truncate pl-2">{document.title}</span>
+
                         <div className="flex items-center">
                             <div
                                 onClick={(e) => onRestore(e, document._id)}
@@ -122,6 +142,7 @@ export const TrashBox = () => {
                             >
                                 <ArchiveRestore className="h-4 w-4 text-muted-foreground" />
                             </div>
+
                             <ConfirmModal onConfirm={() => onRemove(document._id)}>
                                 <div
                                     role="button"

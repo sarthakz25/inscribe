@@ -1,12 +1,14 @@
 "use client";
 
-import { useMutation } from "convex/react";
+import { useMutation, useQuery } from "convex/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { ConfirmModal } from "@/components/modals/confirm-modal";
+import useSubscription from "@/hooks/use-subscription";
+import { useUser } from "@clerk/clerk-react";
 
 interface BannerProps {
     documentId: Id<"documents">;
@@ -16,11 +18,28 @@ export const Banner = ({
     documentId
 }: BannerProps) => {
     const router = useRouter();
+    const { user } = useUser();
 
     const restore = useMutation(api.documents.restore);
     const remove = useMutation(api.documents.remove);
 
+    const allDocuments = useQuery(api.documents.getAllDocuments);
+
+    const { plan } = useSubscription(
+        user?.emailAddresses[0]?.emailAddress!
+    );
+
     const onRestore = () => {
+        if (allDocuments?.length && allDocuments.length >= 5 && plan === "Free") {
+            toast.error("You already have 5 pages. Please delete one to restore this page.");
+            return;
+        }
+
+        if (allDocuments?.length && allDocuments.length >= 100 && plan === "Plus") {
+            toast.error("You already have 100 pages. Please delete one to restore this page.");
+            return;
+        }
+
         const promise = restore({ id: documentId });
 
         toast.promise(promise, {

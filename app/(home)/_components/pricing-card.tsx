@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 import { SignInButton } from "@clerk/clerk-react";
 import { useConvexAuth } from "convex/react";
 import { Check } from "lucide-react";

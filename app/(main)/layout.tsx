@@ -1,10 +1,10 @@
 "use client";
 
-import { Spinner } from "@/components/spinner";
+import { Spinner } from "@/components/shared/spinner";
 import { useConvexAuth } from "convex/react";
 import { redirect } from "next/navigation";
 import { Navigation } from "./_components/navigation";
-import { SearchCommand } from "@/components/search-command";
+import { SearchCommand } from "@/components/shared/search-command";
 
 const MainLayout = ({
     children

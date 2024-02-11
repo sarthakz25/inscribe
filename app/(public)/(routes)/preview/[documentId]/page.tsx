@@ -1,8 +1,8 @@
 "use client";
 
-import { Cover } from "@/components/cover";
-import { Editor } from "@/components/editor";
-import { Toolbar } from "@/components/toolbar";
+import { Cover } from "@/components/shared/cover";
+import { Editor } from "@/components/shared/editor";
+import { Toolbar } from "@/components/shared/toolbar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
