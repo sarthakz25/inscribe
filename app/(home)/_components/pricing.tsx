@@ -11,15 +11,15 @@ const cards = [
         title: "Plus",
         subtitle: "A place for small groups to plan & get organized.",
         options: "100 page limit, Unlimited uploads",
-        price: "499",
-        priceId: "price_1OibCXSBWuDBSPTZqECPsSOA",
+        price: "5",
+        priceId: "price_1OilNMK8QJbjWE4LTdGjo6fP",
     },
     {
         title: "Business",
         subtitle: "An integrated workspace for large organizations.",
         options: "Unlimited usage, Collaborate (soon)",
-        price: "999",
-        priceId: "price_1OibB4SBWuDBSPTZLVKbrcde",
+        price: "15",
+        priceId: "price_1OilZTK8QJbjWE4LpB5GfM0L",
     }
 ];
 
