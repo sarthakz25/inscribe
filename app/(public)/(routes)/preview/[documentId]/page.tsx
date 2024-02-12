@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { Id } from "@/convex/_generated/dataModel";
 import { useMutation, useQuery } from "convex/react";
+import Image from "next/image";
 
 interface DocumentIdPageProps {
     // comes dynamically from folder name to params props
@@ -52,23 +53,42 @@ const DocumentIdPage = ({
     }
 
     return (
-        <div className="pb-[30vh]">
-            <Cover
-                preview
-                url={document.coverImage}
-            />
-            <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
-                <Toolbar
+        <>
+            <div className="pb-[20vh]">
+                <Cover
                     preview
-                    initialData={document}
+                    url={document.coverImage}
                 />
-                <Editor
-                    editable={false}
-                    onChange={onChange}
-                    initialContent={document.content}
-                />
+                <div className="md:max-w-3xl lg:max-w-4xl mx-auto">
+                    <Toolbar
+                        preview
+                        initialData={document}
+                    />
+                    <Editor
+                        editable={false}
+                        onChange={onChange}
+                        initialContent={document.content}
+                    />
+                </div>
             </div>
-        </div>
+            <a href="https://inscribe-app.vercel.app" target="_blank" rel="noopener noreferrer" className="fixed flex items-center justify-end text-xs whitespace-nowrap font-medium p-6 bottom-0 left-0 right-0 z-50">
+                Made with
+                <Image
+                    src="/logo.svg"
+                    alt="Logo"
+                    width="15"
+                    height="15"
+                    className="dark:hidden"
+                />
+                <Image
+                    src="/logo-dark.svg"
+                    alt="Logo"
+                    width="15"
+                    height="15"
+                    className="hidden dark:block"
+                />
+            </a>
+        </>
     );
 }
 

@@ -67,7 +67,7 @@ export const Navigation = () => {
         isResizingRef.current = true;
         document.addEventListener("mousemove", handleMouseMove);
         document.addEventListener("mouseup", handleMouseUp);
-    }
+    };
 
     const handleMouseMove = (
         event: MouseEvent
@@ -84,13 +84,13 @@ export const Navigation = () => {
             navbarRef.current.style.setProperty("left", `${newWidth}px`);
             navbarRef.current.style.setProperty("width", `calc(100% - ${newWidth}px)`);
         }
-    }
+    };
 
     const handleMouseUp = () => {
         isResizingRef.current = false;
         document.removeEventListener("mousemove", handleMouseMove);
         document.removeEventListener("mouseup", handleMouseUp);
-    }
+    };
 
     const resetWidth = () => {
         if (sidebarRef.current && navbarRef.current) {
@@ -103,7 +103,7 @@ export const Navigation = () => {
 
             setTimeout(() => setIsRessetting(false), 300);
         }
-    }
+    };
 
     const collapse = () => {
         if (sidebarRef.current && navbarRef.current) {
@@ -116,7 +116,7 @@ export const Navigation = () => {
 
             setTimeout(() => setIsRessetting(false), 300);
         }
-    }
+    };
 
     const handleCreate = () => {
         if (documents?.length && documents.length >= 5 && plan === "Free") {
@@ -137,7 +137,7 @@ export const Navigation = () => {
             success: "Note ready to use.",
             error: "Note creation failed. Try again."
         });
-    }
+    };
 
     return (
         <>
@@ -160,48 +160,101 @@ export const Navigation = () => {
                     <ChevronsLeft className="h-6 w-6" />
                 </div>
 
-                <div>
-                    <UserItem />
-                    <Item
-                        label="Search"
-                        icon={Search}
-                        isSearch
-                        onClick={search.onOpen}
-                    />
-                    <Item
-                        label="Settings"
-                        icon={Settings2}
-                        isSettings
-                        onClick={settings.onOpen}
-                    />
-                    <Item
-                        onClick={handleCreate}
-                        label="New Page"
-                        icon={PlusCircle}
-                    />
-                </div>
+                <div className="flex flex-1 flex-col overflow-y-auto">
+                    <div>
+                        <UserItem />
 
-                <div className="mt-4">
-                    <DocumentList />
-                    <Item
-                        onClick={handleCreate}
-                        icon={Plus}
-                        label="Add a Page"
-                    />
-                    <Popover>
-                        <PopoverTrigger className="w-full mt-4">
-                            <Item
-                                label="Trash"
-                                icon={Trash2}
-                            />
-                        </PopoverTrigger>
-                        <PopoverContent
-                            className="p-0 w-64 sm:w-72"
-                            side={isMobile ? "bottom" : "right"}
-                        >
-                            <TrashBox />
-                        </PopoverContent>
-                    </Popover>
+                        <div className="p-3 mb-2 bg-primary/5 w-full">
+                            {isLoading ? (
+                                <div className="w-full flex items-center justify-center">
+                                    <Spinner />
+                                </div>
+                            ) : (
+                                <>
+                                    <div className="flex items-center justify-between">
+                                        <div className="flex items-center gap-2 text-sm">
+                                            <Rocket className="h-4 w-4 text-muted-foreground" />
+                                            <p className="font-medium text-muted-foreground">{plan} plan</p>
+                                        </div>
+                                        {plan === "Free" ? (
+                                            <p className="text-xs font-medium text-muted-foreground">
+                                                {documents?.length}/5
+                                            </p>
+                                        ) : plan === "Plus" ? (
+                                            <p className="text-xs font-medium text-muted-foreground">
+                                                {documents?.length}/100
+                                            </p>
+                                        ) : (
+                                            <p className="text-xs font-medium text-muted-foreground">
+                                                {documents?.length} pages
+                                            </p>
+                                        )}
+                                    </div>
+                                    {plan === "Free" && (
+                                        <Progress
+                                            value={
+                                                documents?.length && documents.length >= 5
+                                                    ? 100
+                                                    : (documents?.length || 0) * 20
+                                            }
+                                            className="mt-2 h-2"
+                                        />
+                                    )}
+                                    {plan === "Plus" && (
+                                        <Progress
+                                            value={
+                                                documents?.length && documents.length >= 100
+                                                    ? 100
+                                                    : (documents?.length || 0) * 1
+                                            }
+                                            className="mt-2 h-2"
+                                        />
+                                    )}
+                                </>
+                            )}
+                        </div>
+
+                        <Item
+                            label="Search"
+                            icon={Search}
+                            isSearch
+                            onClick={search.onOpen}
+                        />
+                        <Item
+                            label="Settings"
+                            icon={Settings2}
+                            isSettings
+                            onClick={settings.onOpen}
+                        />
+                        <Item
+                            onClick={handleCreate}
+                            label="New Page"
+                            icon={PlusCircle}
+                        />
+                    </div>
+
+                    <div className="my-4">
+                        <DocumentList />
+                        <Item
+                            onClick={handleCreate}
+                            icon={Plus}
+                            label="Add a Page"
+                        />
+                        <Popover>
+                            <PopoverTrigger className="w-full mt-4">
+                                <Item
+                                    label="Trash"
+                                    icon={Trash2}
+                                />
+                            </PopoverTrigger>
+                            <PopoverContent
+                                className="p-0 w-64 sm:w-72"
+                                side={isMobile ? "bottom" : "right"}
+                            >
+                                <TrashBox />
+                            </PopoverContent>
+                        </Popover>
+                    </div>
                 </div>
 
                 <div
@@ -209,56 +262,6 @@ export const Navigation = () => {
                     onClick={resetWidth}
                     className="opacity-0 group-hover/sidebar:opacity-100 transition cursor-ew-resize absolute h-full w-1 bg-primary/10 right-0 top-0"
                 />
-
-                <div className="absolute bottom-0 p-4 bg-background/50 w-full">
-                    {isLoading ? (
-                        <div className="w-full flex items-center justify-center">
-                            <Spinner />
-                        </div>
-                    ) : (
-                        <>
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-2 text-sm">
-                                    <Rocket className="h-4 w-4" />
-                                    <p className="font-medium text-muted-foreground">{plan} plan</p>
-                                </div>
-                                {plan === "Free" ? (
-                                    <p className="text-sm text-muted-foreground">
-                                        {documents?.length}/5
-                                    </p>
-                                ) : plan === "Plus" ? (
-                                    <p className="text-sm text-muted-foreground">
-                                        {documents?.length}/100
-                                    </p>
-                                ) : (
-                                    <p className="text-sm text-muted-foreground">
-                                        {documents?.length} pages
-                                    </p>
-                                )}
-                            </div>
-                            {plan === "Free" && (
-                                <Progress
-                                    value={
-                                        documents?.length && documents.length >= 5
-                                            ? 100
-                                            : (documents?.length || 0) * 20
-                                    }
-                                    className="mt-2 h-2"
-                                />
-                            )}
-                            {plan === "Plus" && (
-                                <Progress
-                                    value={
-                                        documents?.length && documents.length >= 100
-                                            ? 100
-                                            : (documents?.length || 0) * 1
-                                    }
-                                    className="mt-2 h-2"
-                                />
-                            )}
-                        </>
-                    )}
-                </div>
             </aside>
             <div
                 ref={navbarRef}

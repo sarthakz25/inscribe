@@ -93,7 +93,7 @@ export const Toolbar = ({ initialData, preview }: ToolbarProps) => {
                 </div>
             )}
             {!!initialData.icon && preview && (
-                <p className="text-6xl pt-6">{initialData.icon}</p>
+                <p className="text-6xl pt-3">{initialData.icon}</p>
             )}
             <div className={cn(
                 "opacity-0 group-hover:opacity-100 flex items-center gap-2 py-7 flex-wrap",

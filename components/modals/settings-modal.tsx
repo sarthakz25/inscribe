@@ -64,7 +64,7 @@ export const SettingsModal = () => {
                     <div className="flex flex-col gap-y-1">
                         <Label>Appearance</Label>
                         <span className="text-[0.8rem] text-muted-foreground">
-                            Customize how Inscribe looks on your device
+                            Customize how Inscribe looks
                         </span>
                     </div>
                     <ModeToggle />
@@ -73,7 +73,7 @@ export const SettingsModal = () => {
                     <div className="flex flex-col gap-y-1">
                         <Label>Payments</Label>
                         <span className="text-[0.8rem] text-muted-foreground">
-                            Manage your subscription and billing information
+                            Manage your subscription
                         </span>
                     </div>
                     <Button size="sm" variant="outline" onClick={onSubmit}>

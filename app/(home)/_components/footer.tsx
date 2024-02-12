@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 
 export const Footer = () => {
     return (
@@ -7,9 +8,26 @@ export const Footer = () => {
                 © 2024 Sarthak Khandelwal
             </a>
             <div className="md:ml-auto w-full md:justify-end flex items-center gap-x-2 text-muted-foreground">
-                <Button variant="ghost" size="sm">
-                    Terms
-                </Button>
+                <Popover>
+                    <PopoverTrigger>
+                        <Button variant="ghost" size="sm">
+                            Terms
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <div className="p-3 text-sm">
+                            <p className="font-medium mb-2 text-primary/75">
+                                Welcome to Inscribe! By using our services, you agree to the following terms:
+                            </p>
+                            <ul className="font-normal space-y-1 text-primary/50">
+                                <li>No illegal, dangerous or infringing uploads.</li>
+                                <li>Free plans have basic features, paid unlocks more tools.</li>
+                                <li>You own your data, we won't share it without permission.</li>
+                                <li>We may remove content or accounts that violate rules.</li>
+                            </ul>
+                        </div>
+                    </PopoverContent>
+                </Popover>
             </div>
         </div>
     );
