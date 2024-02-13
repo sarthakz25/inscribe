@@ -1,42 +1,87 @@
 # Inscribe
 
-A modern, fullstack note-taking app inspired by Notion.
+Inscribe is a modern note-taking app for organizing personal and team notes.
+
+## Demo
+
+[https://inscribe-app.vercel.app](https://inscribe-app.vercel.app)
 
 ## About
 
-Inscribe allows users to create documents with rich text editing, images, expandable sections, and more. Key features include:
+Inscribe allows users to create and share notes with rich text editing, images, expandable sections, and more. Key features include:
 
-- Authentication
 - Real-time database
-- Intuitive editor
-- Nested documents with infinite children
-- Document publishing
-- Trash can & soft delete
-- Responsive for both web and mobile
+- Recover deleted files
+- Stripe Integration
+- Subscription plan
+- Light and Dark mode
+- Blocknote
 - Expandable sidebar
-- Light and dark mode
+- Infinite children documents
 
-## Tech Stack
+## Built with
 
-- Next.js
-- React
-- Convex 
+Technologies used in the project:
+
+### Frontend
+- ReactJS
+- TypeScript
+- NextJS
+
+### Backend
+- Convex
+
+### Auth
+- Clerk
+
+### Payments
+- Stripe
+
+### UI
 - Tailwind CSS
+- Shadcn UI
 
-## Installation
+## Installation Steps:
+
+1. Install packages
 
 ```
-# Clone the repo
-git clone https://github.com/sarthakz25/inscribe
+npm i & yarn install
+```
 
-# Install packages
-npm install
+2. Setup .env file
 
-# Setup environment variables
-cp .env.example .env
+```
+# CLERK AUTHORIZATION ENVIRONMENT VARIABLES
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
 
-# Start the dev server
+# CONVEX ENVIRONMENT VARIABLES
+CONVEX_DEPLOYMENT=
+NEXT_PUBLIC_CONVEX_URL=
+
+# DOMAIN
+NEXT_PUBLIC_DOMAIN=
+
+# EDGE STORE
+EDGE_STORE_ACCESS_KEY=
+EDGE_STORE_SECRET_KEY=
+
+# STRIPE
+STRIPE_PUBLISHABLE_KEY=
+STRIPE_SECRET_KEY=
+```
+
+3. Setup Convex
+
+```
+npx convex dev
+```
+
+4. Start the app
+
+```
 npm run dev
 ```
 
-Peace out! 😎
+[Check out my other projects on GitHub!](https://github.com/sarthakz25)
